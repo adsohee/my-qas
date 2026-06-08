@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>QAS</title>
+
+<link rel="stylesheet"
+      href="./style.css?v=2">
+<link rel="manifest" href="/g/tak/manifest.json">
+<meta name="theme-color" content="#0f1115">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+
+
+</head>
+<body>
+
+<header class="top-bar">
+
+<div class="top-tabs">
+
+ <!-- 뒤로 가기 -->
+    <button class="top-tab" onclick="location.href='https://my.qas.kr/'">
+    <svg xmlns="http://www.w3.org/2000/svg"
+         width="24"
+         height="24"
+         viewBox="0 0 24 24"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="2"
+         stroke-linecap="round"
+         stroke-linejoin="round">
+      <path d="m12 19-7-7 7-7"/>
+      <path d="M19 12H5"/>
+    </svg>
+  </button>
+
+<button
+  id="favoriteTab"
+  class="top-tab"
+  onclick="showPage('favorite')">
+</button>
+
+<button
+  id="noteTab"
+  class="top-tab"
+  onclick="showPage('memo')">
+</button>
+
+<button
+  id="linkTab"
+  class="top-tab"
+  onclick="showPage('link')">
+</button>
+
+<button
+  id="phraseTab"
+  class="top-tab"
+  onclick="showPage('phrase')">
+</button>
+
+<button
+  id="fileTab"
+  class="top-tab">
+</button>
+
+<div class="search-wrap">
+
+  <span class="search-divider">│</span>
+
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Search..."
+  >
+
+</div>
+</div>
+
+</div>
+
+  </div>
+
+</header>
+
+
+<!-- 메인 화면 -->
+<main class="main-screen" id="mainScreen">
+
+  <div class="main-content">
+
+    <br>
+
+    <!-- 즐겨찾기 홈 -->
+<div id="favoritePage">
+
+  <div id="favoriteList"></div>
+
+</div>
+
+    <!-- 메모 페이지 -->
+    <div id="memoPage">
+
+      <div class="sheet-container">
+        <div class="memo-container">
+
+<div class="memo-input-row memo-single-row">
+
+<input
+  type="text"
+  id="memoInput"
+placeholder="메모"
+>
+
+            <button id="addMemoBtn">
+              +
+            </button>
+
+          </div>
+
+          <div id="memoList"></div>
+
+        </div>
+      </div>
+
+
+      
+    </div>
+
+    <!-- 링크 페이지 -->
+
+<div id="linkPage">
+
+  <div class="memo-container">
+
+    <div class="memo-input-row">
+
+      <input
+        type="text"
+        id="linkTitleInput"
+        placeholder="제목"
+      >
+
+      <input
+        type="text"
+        id="linkUrlInput"
+        placeholder="URL"
+      >
+
+      <button id="addLinkBtn">
+        +
+      </button>
+
+    </div>
+
+    <div id="linkList"></div>
+
+  </div>
+
+</div>
+
+  <!-- 문구 페이지 -->
+
+  <div id="phrasePage">
+
+  <button id="addPhraseBtn">
+    +
+  </button>
+
+  <div id="phraseList"></div>
+
+</div>
+<!-- 여기까지 -->
+
+<!-- 검색 결과 영역 추가 -->
+<div id="searchPage" style="display:none;">
+
+  <div id="searchResults"></div>
+
+</div>
+
+<!-- 여기까지 -->
+
+<div id="toast"></div>  
+
+    <div class="button-group"></div>
+
+  </div>
+
+</main>
+
+
+  <!-- 하단 텍스트 -->
+<footer class="bottom-text">
+  <span>© Sohee</span>
+</footer>
+<script src="./script.js"></script>
+</body>
+</html>
