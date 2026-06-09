@@ -154,7 +154,11 @@ const memoList =
     "memoList"
   );
 
-loadMemos();
+refreshItems().then(() => {
+
+  loadMemos();
+
+});
 
 addMemoBtn.addEventListener(
   "click",
@@ -244,6 +248,19 @@ const searchResults =
   );
 
 let draggedItem = null;
+let allItems = [];
+
+async function refreshItems() {
+
+  const res =
+    await apiFetch(
+      `${API}/items`
+    );
+
+  allItems =
+    await res.json();
+
+}
 
 async function addMemo() {
 
@@ -271,9 +288,11 @@ body: JSON.stringify({
 
   });
 
-  memoInput.value = "";
+memoInput.value = "";
 
-  loadMemos();
+await refreshItems();
+
+loadMemos();
 
 }
 
@@ -1349,11 +1368,7 @@ if (keywords.length === 0) {
   return;
 }
 
-  const res =
-    await fetch(`${API}/items`);
-
-  const data =
-    await res.json();
+const data = allItems;
 
   const notes =
     data.filter(item =>
