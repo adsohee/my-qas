@@ -938,33 +938,36 @@ async function loadLogs() {
   data-id="${item.id}"
 >
 
-<input
-  class="log-title"
-  data-title-id="${item.id}"
-  value="${item.title || ""}"
-  placeholder="제목"
->
+<div class="log-header">
+
+  <input
+    class="log-title"
+    data-title-id="${item.id}"
+    value="${item.title || ""}"
+    placeholder="제목"
+  >
+
+  <div class="phrase-actions">
+
+    <button
+      class="icon-btn"
+      onclick="deleteItem(event, '${item.id}')"
+    >
+      ${DELETE_ICON}
+    </button>
+
+    <span class="memo-date">
+      ${formattedDate}
+    </span>
+
+  </div>
+
+</div>
 
 <textarea
   class="phrase-box"
   data-id="${item.id}"
 >${item.content || ""}</textarea>
-
-<div class="phrase-actions">
-
-<button
-  class="icon-btn"
-  onclick="deleteItem(event, '${item.id}')"
->
-  ${DELETE_ICON}
-</button>
-
-<span class="memo-date">
-  ${formattedDate}
-</span>
-
-</div>
-
 </div>
 
 `;
