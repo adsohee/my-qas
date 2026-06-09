@@ -1398,7 +1398,7 @@ searchInput.addEventListener(
       "none";
 
     showPage(currentPage);
-
+searchInput.blur();
   }
 );
 
