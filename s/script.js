@@ -250,6 +250,9 @@ const searchResults =
 let draggedItem = null;
 let allItems = [];
 
+const deleteConfirmMap = {};
+
+
 async function refreshItems() {
 
   const res =
@@ -356,7 +359,7 @@ memoList.innerHTML += `
 
         <button
       class="icon-btn"
-      onclick="deleteItem('${item.id}')"
+      onclick="deleteItem(event, '${item.id}')"
     >
       ${DELETE_ICON}
     </button>
@@ -731,7 +734,7 @@ linkList.innerHTML += `
 
     <button
       class="icon-btn"
-      onclick="deleteItem('${item.id}')"
+      onclick="deleteItem(event, '${item.id}')"
     >
       ${DELETE_ICON}
     </button>
@@ -840,7 +843,7 @@ phraseList.innerHTML += `
 
 <button
   class="icon-btn"
-  onclick="deleteItem('${item.id}')"
+  onclick="deleteItem(event, '${item.id}')"
 >
   ${DELETE_ICON}
 </button>
@@ -951,7 +954,7 @@ async function loadLogs() {
 
 <button
   class="icon-btn"
-  onclick="deleteItem('${item.id}')"
+  onclick="deleteItem(event, '${item.id}')"
 >
   ${DELETE_ICON}
 </button>
@@ -1163,7 +1166,37 @@ async function copyLink(url) {
 
 }
 
-async function deleteItem(id) {
+async function deleteItem(event, id) {
+
+  const btn = event.currentTarget;
+
+  if (!deleteConfirmMap[id]) {
+
+    deleteConfirmMap[id] = true;
+
+    btn.textContent = "Delete?";
+    btn.style.color = "#e53935";
+    btn.style.fontSize = "11px";
+
+    setTimeout(() => {
+
+      if (deleteConfirmMap[id]) {
+
+        deleteConfirmMap[id] = false;
+
+        btn.innerHTML = DELETE_ICON;
+        btn.style.color = "";
+        btn.style.fontSize = "";
+
+      }
+
+    }, 2000);
+
+    return;
+
+  }
+
+  deleteConfirmMap[id] = false;
 
   await fetch(
     `${API}/items/${id}`,
@@ -1172,15 +1205,15 @@ async function deleteItem(id) {
     }
   );
 
-showToast("Deleted.");
+  showToast("Deleted.");
 
-await refreshItems();
+  await refreshItems();
 
-loadMemos();
-loadLinks();
-loadPhrases();
-loadLogs();
-loadFavorites();
+  loadMemos();
+  loadLinks();
+  loadPhrases();
+  loadLogs();
+  loadFavorites();
 
 }
 
