@@ -5,7 +5,7 @@ const apiFetch = (url, options = {}) =>
     credentials: "include",
     ...options
   });
-
+ 
   /* 상단 탭 버튼 아이콘 */
 
 const FAVORITE_TAB_ICON = `
