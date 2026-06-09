@@ -861,6 +861,7 @@ phraseList.innerHTML += `
   data-id="${item.id}"
 >${item.content || ""}</textarea>
 
+</div>
 `;
 
   });
