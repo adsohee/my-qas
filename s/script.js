@@ -243,8 +243,7 @@ const searchResults =
     "searchResults"
   );
 
-let draggedMemo = null;
-
+let draggedItem = null;
 
 async function addMemo() {
 
@@ -396,35 +395,10 @@ document
 
   });
 
-document
-  .querySelectorAll("#memoList .memo-item")
-  .forEach(item => {
-
-    item.addEventListener("dragstart", () => {
-      draggedMemo = item;
-    });
-
-    item.addEventListener("dragover", e => {
-      e.preventDefault();
-    });
-
-item.addEventListener("drop", async e => {
-      e.preventDefault();
-
-      if (
-        draggedMemo &&
-        draggedMemo !== item
-      ) {
-        item.parentNode.insertBefore(
-          draggedMemo,
-          item
-        );
-
-        await saveOrder("memoList");
-      }
-    });
-
-  });
+enableDragSort(
+  "memoList",
+  "memo-item"
+);
 
   
 }
@@ -699,6 +673,8 @@ linkList.innerHTML += `
 <div
   class="memo-item"
   id="item-${item.id}"
+  draggable="true"
+  data-id="${item.id}"
 >
 <div class="link-line">
 
@@ -747,7 +723,12 @@ linkList.innerHTML += `
 `;
 
 });
-
+  
+enableDragSort(
+  "linkList",
+  "memo-item"
+);
+  
 }
 
 async function addPhrase() {
@@ -1188,6 +1169,7 @@ async function saveOrder(containerId) {
 
   });
 
+  
   await fetch(
     `${API}/items/reorder`,
     {
@@ -1200,6 +1182,66 @@ async function saveOrder(containerId) {
   );
 
 }
+
+
+function enableDragSort(
+  containerId,
+  itemClass
+) {
+
+  document
+    .querySelectorAll(
+      `#${containerId} .${itemClass}`
+    )
+    .forEach(item => {
+
+      item.addEventListener(
+        "dragstart",
+        () => {
+
+          draggedItem = item;
+
+        }
+      );
+
+      item.addEventListener(
+        "dragover",
+        e => {
+
+          e.preventDefault();
+
+        }
+      );
+
+      item.addEventListener(
+        "drop",
+        async e => {
+
+          e.preventDefault();
+
+          if (
+            draggedItem &&
+            draggedItem !== item
+          ) {
+
+            item.parentNode.insertBefore(
+              draggedItem,
+              item
+            );
+
+            await saveOrder(
+              containerId
+            );
+
+          }
+
+        }
+      );
+
+    });
+
+}
+
 
 function showToast(text) {
 
