@@ -1,5 +1,11 @@
 const API = "/api";
 
+let allItems = [];
+async function refreshItems() {
+  const res = await apiFetch(`${API}/items`);
+  allItems = await res.json();
+}
+
 const apiFetch = (url, options = {}) =>
   fetch(url, {
     credentials: "include",
@@ -249,7 +255,7 @@ body: JSON.stringify({
 
   memoInput.value = "";
 
-  loadMemos();
+showPage(currentPage);
 
 }
 
@@ -354,6 +360,7 @@ async function toggleFavorite(
 await fetch(`${API}/items/${id}`, {
 
       method: "PATCH",
+  
 
       headers: {
         "Content-Type":
@@ -366,9 +373,7 @@ await fetch(`${API}/items/${id}`, {
 
     });
 
-loadMemos();
-loadLinks();
-loadFavorites();
+showPage(currentPage);
 
   } catch (err) {
 
@@ -443,12 +448,10 @@ if (page === "favorite") {
 
 }
 
-  if (page === "memo") {
-
-    memoPage.style.display =
-      "block";
-
-  }
+if (page === "memo") {
+  memoPage.style.display = "block";
+  loadMemos();
+}
 
 if (page === "link") {
 
@@ -473,7 +476,6 @@ if (page === "phrase") {
 
 
 showPage("favorite");
-loadFavorites();
 
 
 async function loadFavorites() {
@@ -808,10 +810,7 @@ async function deleteItem(id) {
 
   showToast("Deleted.");
 
-  loadMemos();
-  loadLinks();
-  loadPhrases();
-  loadFavorites();
+showPage(currentPage);
 
 }
 
