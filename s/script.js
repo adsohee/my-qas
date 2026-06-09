@@ -1587,10 +1587,11 @@ notes.map(item => `
   class="search-item"
   onclick="goToItem(
     'link',
-    '${item.id}'
+    ${highlight(item.title)}
   )"
 >
               ${item.title}
+              
               <div class="search-sub">
                 ${highlight(item.url)}
               </div>
@@ -1613,7 +1614,7 @@ notes.map(item => `
   class="search-item"
   onclick="goToItem(
     'phrase',
-    '${item.id}'
+   ${highlight(item.content)}
   )"
 >
               ${item.content}
@@ -1639,9 +1640,9 @@ if (logs.length) {
     '${item.id}'
   )"
 >
-  ${item.title || "(제목 없음)"}
+  ${highlight(item.title || "(제목 없음)")}
   <div class="search-sub">
-    ${item.content || ""}
+   ${highlight(item.content || "")}
   </div>
 </div>
 `).join("")
