@@ -452,6 +452,25 @@ body::-webkit-scrollbar {
   cursor:pointer;
 }
 
+.memo-title-input{
+
+  width:100%;
+
+  border:none;
+
+  outline:none;
+
+  background:transparent;
+
+  font:inherit;
+
+  color:inherit;
+
+  padding:0;
+
+}
+
+
 .memo-content{
   color:#333;
 }
@@ -471,7 +490,7 @@ body::-webkit-scrollbar {
 
 .memo-date{
   margin-left:2px;
-  font-size: 12px;
+  font-size: 9px;
   color:#999;
 }
 

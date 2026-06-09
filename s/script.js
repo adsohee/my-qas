@@ -313,10 +313,11 @@ memoList.innerHTML += `
 
   <div class="memo-main">
 
-    <span
-      class="memo-title">
-      ${item.title}
-    </span>
+<input
+  class="memo-title-input"
+  data-id="${item.id}"
+  value="${item.title}"
+>
 
   </div>
 
@@ -351,6 +352,47 @@ memoList.innerHTML += `
 `;
 
   });
+
+
+document
+  .querySelectorAll(".memo-title-input")
+  .forEach(input => {
+
+    let timer;
+
+    input.addEventListener(
+      "input",
+      () => {
+
+        clearTimeout(timer);
+
+        timer =
+          setTimeout(() => {
+
+            saveMemo(input);
+
+          }, 1000);
+
+      }
+    );
+
+    input.addEventListener(
+  "keydown",
+  e => {
+
+    if (e.key === "Enter") {
+
+      e.preventDefault();
+
+      input.blur();
+
+    }
+
+  }
+);
+
+  });
+
 
 }
 
@@ -754,12 +796,7 @@ phraseList.innerHTML += `
 
 <div class="phrase-actions">
 
-<button
-  class="icon-btn"
-  onclick="copyPhrase('${item.id}')"
->
-  ${COPY_ICON}
-</button>
+
 
 <button
   class="icon-btn"
@@ -768,6 +805,12 @@ phraseList.innerHTML += `
   ${DELETE_ICON}
 </button>
 
+<button
+  class="icon-btn"
+  onclick="copyPhrase('${item.id}')"
+>
+  ${COPY_ICON}
+</button>
 </div>
 
 </div>
@@ -962,6 +1005,35 @@ document
 
 /* 로그 끝 */
 
+async function saveMemo(input) {
+
+  await fetch(
+
+    `${API}/items/${input.dataset.id}`,
+
+    {
+
+      method: "PATCH",
+
+      headers: {
+
+        "Content-Type":
+          "application/json"
+
+      },
+
+      body: JSON.stringify({
+
+        title: input.value
+
+      })
+
+    }
+
+  );
+
+}
+
 async function savePhrase(box) {
 
   const id = box.dataset.id;
@@ -1094,14 +1166,50 @@ searchInput.addEventListener(
   searchItems
 );
 
+searchInput.addEventListener(
+  "keydown",
+  e => {
+
+    if (e.key !== "Escape") {
+      return;
+    }
+
+    searchInput.value = "";
+
+    searchPage.style.display =
+      "none";
+
+    showPage(currentPage);
+
+  }
+);
+
+
 /* 검색 함수 추가 */
 
 async function searchItems() {
 
-  const keyword =
-    searchInput.value
-      .trim()
-      .toLowerCase();
+const keywords =
+  searchInput.value
+    .trim()
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(Boolean);
+
+const match = text => {
+
+  const target =
+    (text || "")
+      .toLowerCase()
+      .replace(/\s+/g, "");
+
+  return keywords.every(word =>
+    target.includes(
+      word.replace(/\s+/g, "")
+    )
+  );
+
+};
 
 document.getElementById("favoritePage").style.display = "none";
 document.getElementById("memoPage").style.display = "none";
@@ -1132,8 +1240,8 @@ if (!keyword) {
     data.filter(item =>
       item.type === "note" &&
       (
-        item.title?.toLowerCase().includes(keyword) ||
-        item.content?.toLowerCase().includes(keyword)
+match(item.title) ||
+match(item.content)
       )
     );
 
@@ -1141,8 +1249,8 @@ if (!keyword) {
     data.filter(item =>
       item.type === "link" &&
       (
-        item.title?.toLowerCase().includes(keyword) ||
-        item.url?.toLowerCase().includes(keyword)
+match(item.title) ||
+match(item.url)
       )
     );
 
@@ -1150,7 +1258,7 @@ if (!keyword) {
     data.filter(item =>
       item.type === "phrase" &&
       (
-        item.content?.toLowerCase().includes(keyword)
+match(item.content)
       )
     );
 
@@ -1158,8 +1266,8 @@ if (!keyword) {
   data.filter(item =>
     item.type === "log" &&
     (
-      item.title?.toLowerCase().includes(keyword) ||
-      item.content?.toLowerCase().includes(keyword)
+match(item.title) ||
+match(item.content)
     )
   );
 
@@ -1369,3 +1477,17 @@ document.getElementById(
   "fileTab"
 ).innerHTML =
   TYPES.file.icon;
+
+
+document
+  .querySelectorAll("input")
+  .forEach(input => {
+    input.setAttribute("autocomplete", "off");
+    input.setAttribute("spellcheck", "false");
+  });
+
+document
+  .querySelectorAll("textarea")
+  .forEach(textarea =>
+    textarea.setAttribute("spellcheck", "false")
+  );
