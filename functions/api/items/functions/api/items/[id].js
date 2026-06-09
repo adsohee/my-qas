@@ -2,6 +2,7 @@ export async function onRequest(context) {
   const { request, env, params } = context;
 
   const id = params.id;
+  
 
   // PATCH
   if (request.method === "PATCH") {
