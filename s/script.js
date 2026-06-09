@@ -322,9 +322,6 @@ memoList.innerHTML += `
 
   <div class="memo-meta">
 
-    <span class="memo-date">
-      ${formattedDate}
-    </span>
 
     <button
       class="memo-favorite ${
@@ -342,6 +339,9 @@ memoList.innerHTML += `
       ${DELETE_ICON}
     </button>
 
+    <span class="memo-date">
+      ${formattedDate}
+    </span>
 
 
   </div>
@@ -847,10 +847,6 @@ async function loadLogs() {
   id="item-${item.id}"
 >
 
-<div class="memo-date">
-  ${formattedDate}
-</div>
-
 <input
   class="log-title"
   data-title-id="${item.id}"
@@ -871,6 +867,10 @@ async function loadLogs() {
 >
   ${DELETE_ICON}
 </button>
+
+<span class="memo-date">
+  ${formattedDate}
+</span>
 
 </div>
 
