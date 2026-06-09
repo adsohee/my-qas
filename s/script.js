@@ -824,7 +824,6 @@ async function loadPhrases() {
 
 phraseList.innerHTML += `
 
-
 <div
   class="phrase-item"
   id="item-${item.id}"
@@ -832,38 +831,35 @@ phraseList.innerHTML += `
   data-id="${item.id}"
 >
 
-<div class="log-header">
+  <div class="log-header">
 
-  <div class="phrase-actions">
+    <textarea
+      class="phrase-box"
+      data-id="${item.id}"
+    >${item.content || ""}</textarea>
 
-    <button
-      class="icon-btn"
-      onclick="deleteItem(event, '${item.id}')"
-    >
-      ${DELETE_ICON}
-    </button>
+    <div class="phrase-actions">
 
-    <button
-      class="icon-btn"
-      onclick="copyPhrase('${item.id}')"
-    >
-      ${COPY_ICON}
-    </button>
+      <button
+        class="icon-btn"
+        onclick="deleteItem(event, '${item.id}')"
+      >
+        ${DELETE_ICON}
+      </button>
+
+      <button
+        class="icon-btn"
+        onclick="copyPhrase('${item.id}')"
+      >
+        ${COPY_ICON}
+      </button>
+
+    </div>
 
   </div>
 
 </div>
 
-  </div>
-
-</div>
-
-<textarea
-  class="phrase-box"
-  data-id="${item.id}"
->${item.content || ""}</textarea>
-
-</div>
 `;
 
   });
