@@ -832,31 +832,34 @@ phraseList.innerHTML += `
   data-id="${item.id}"
 >
 
+<div class="log-header">
+
+  <div></div>
+
+  <div class="phrase-actions">
+
+    <button
+      class="icon-btn"
+      onclick="deleteItem(event, '${item.id}')"
+    >
+      ${DELETE_ICON}
+    </button>
+
+    <button
+      class="icon-btn"
+      onclick="copyPhrase('${item.id}')"
+    >
+      ${COPY_ICON}
+    </button>
+
+  </div>
+
+</div>
+
 <textarea
   class="phrase-box"
   data-id="${item.id}"
 >${item.content || ""}</textarea>
-
-<div class="phrase-actions">
-
-
-
-<button
-  class="icon-btn"
-  onclick="deleteItem(event, '${item.id}')"
->
-  ${DELETE_ICON}
-</button>
-
-<button
-  class="icon-btn"
-  onclick="copyPhrase('${item.id}')"
->
-  ${COPY_ICON}
-</button>
-</div>
-
-</div>
 
 `;
 
