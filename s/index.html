@@ -61,6 +61,12 @@
 </button>
 
 <button
+  id="logTab"
+  class="top-tab"
+  onclick="showPage('log')">
+</button>
+
+<button
   id="fileTab"
   class="top-tab">
 </button>
@@ -171,7 +177,20 @@ placeholder="메모"
   <div id="phraseList"></div>
 
 </div>
-<!-- 여기까지 -->
+
+
+  <!-- 기록 페이지 -->
+
+<div id="logPage">
+
+  <button id="addLogBtn">
+    +
+  </button>
+
+  <div id="logList"></div>
+
+</div>
+
 
 <!-- 검색 결과 영역 추가 -->
 <div id="searchPage" style="display:none;">

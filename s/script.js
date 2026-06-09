@@ -1,11 +1,5 @@
 const API = "/api";
 
-let allItems = [];
-async function refreshItems() {
-  const res = await apiFetch(`${API}/items`);
-  allItems = await res.json();
-}
-
 const apiFetch = (url, options = {}) =>
   fetch(url, {
     credentials: "include",
@@ -51,6 +45,10 @@ const PHRASE_ICON = `
 <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-icon lucide-clipboard"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
 `;
 
+const LOG_ICON = `
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-logs-icon lucide-logs"><path d="M3 5h1"/><path d="M3 12h1"/><path d="M3 19h1"/><path d="M8 5h1"/><path d="M8 12h1"/><path d="M8 19h1"/><path d="M13 5h8"/><path d="M13 12h8"/><path d="M13 19h8"/></svg>
+`;
+
 const FILE_ICON = `
 <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-open-icon lucide-folder-open"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></svg>
 `;
@@ -76,6 +74,11 @@ const TYPES = {
     icon: PHRASE_ICON,
     name: "문구"
   },
+
+  log: {
+  icon: LOG_ICON,
+  name: "기록"
+},
 
   file: {
     icon: FILE_ICON,
@@ -183,6 +186,16 @@ const phraseList =
     "phraseList"
   );
 
+  const addLogBtn =
+  document.getElementById(
+    "addLogBtn"
+  );
+
+const logList =
+  document.getElementById(
+    "logList"
+  );
+
 addLinkBtn.addEventListener(
   "click",
   addLink
@@ -207,6 +220,11 @@ linkUrlInput.addEventListener(
 addPhraseBtn.addEventListener(
   "click",
   addPhrase
+);
+
+addLogBtn.addEventListener(
+  "click",
+  addLog
 );
 
 
@@ -255,7 +273,7 @@ body: JSON.stringify({
 
   memoInput.value = "";
 
-showPage(currentPage);
+  loadMemos();
 
 }
 
@@ -360,7 +378,6 @@ async function toggleFavorite(
 await fetch(`${API}/items/${id}`, {
 
       method: "PATCH",
-  
 
       headers: {
         "Content-Type":
@@ -373,7 +390,9 @@ await fetch(`${API}/items/${id}`, {
 
     });
 
-showPage(currentPage);
+loadMemos();
+loadLinks();
+loadFavorites();
 
   } catch (err) {
 
@@ -397,7 +416,8 @@ const tabMap = {
   favorite: "favoriteTab",
   memo: "noteTab",
   link: "linkTab",
-  phrase: "phraseTab"
+  phrase: "phraseTab",
+  log: "logTab"
 };
 
 document
@@ -427,6 +447,11 @@ document
     "phrasePage"
   );
 
+  const logPage =
+  document.getElementById(
+    "logPage"
+  );
+
 favoritePage.style.display =
   "none";
 
@@ -438,6 +463,9 @@ linkPage.style.display =
 
 phrasePage.style.display =
   "none";  
+
+  logPage.style.display =
+  "none";
   
 if (page === "favorite") {
 
@@ -448,10 +476,12 @@ if (page === "favorite") {
 
 }
 
-if (page === "memo") {
-  memoPage.style.display = "block";
-  loadMemos();
-}
+  if (page === "memo") {
+
+    memoPage.style.display =
+      "block";
+
+  }
 
 if (page === "link") {
 
@@ -471,11 +501,20 @@ if (page === "phrase") {
 
 }
 
+if (page === "log") {
+
+  logPage.style.display =
+    "block";
+
+  loadLogs();
+
+}
 
 }
 
 
 showPage("favorite");
+loadFavorites();
 
 
 async function loadFavorites() {
@@ -658,6 +697,29 @@ async function addPhrase() {
 
 }
 
+async function addLog() {
+
+  await fetch(`${API}/items`, {
+
+    method: "POST",
+
+    headers: {
+      "Content-Type":
+        "application/json"
+    },
+
+    body: JSON.stringify({
+      type: "log",
+      title: "",
+      content: ""
+    })
+
+  });
+
+  loadLogs();
+
+}
+
 async function loadPhrases() {
 
   const res =
@@ -752,6 +814,154 @@ box.style.height =
 
 }
 
+/* 로그 시작 */
+async function loadLogs() {
+
+  const res =
+    await fetch(
+      `${API}/items`
+    );
+
+  const data =
+    await res.json();
+
+  logList.innerHTML = "";
+
+  const logs =
+    data.filter(
+      item => item.type === "log"
+    );
+
+  logs.forEach(item => {
+
+    const date =
+      new Date(item.created_at);
+
+    const formattedDate =
+      `${String(date.getMonth()+1).padStart(2,"0")}.${String(date.getDate()).padStart(2,"0")}. ${String(date.getHours()).padStart(2,"0")}:${String(date.getMinutes()).padStart(2,"0")}`;
+
+    logList.innerHTML += `
+
+<div
+  class="phrase-item"
+  id="item-${item.id}"
+>
+
+<div class="memo-date">
+  ${formattedDate}
+</div>
+
+<input
+  class="log-title"
+  data-title-id="${item.id}"
+  value="${item.title || ""}"
+  placeholder="제목"
+>
+
+<textarea
+  class="phrase-box"
+  data-id="${item.id}"
+>${item.content || ""}</textarea>
+
+<div class="phrase-actions">
+
+<button
+  class="icon-btn"
+  onclick="deleteItem('${item.id}')"
+>
+  ${DELETE_ICON}
+</button>
+
+</div>
+
+</div>
+
+`;
+
+  });
+
+  document
+    .querySelectorAll("#logPage .phrase-box")
+    .forEach(box => {
+
+      box.style.height = "auto";
+      box.style.height =
+        box.scrollHeight + "px";
+
+      let timer;
+
+      box.addEventListener(
+        "input",
+        () => {
+
+          clearTimeout(timer);
+
+          box.style.height = "auto";
+          box.style.height =
+            box.scrollHeight + "px";
+
+          timer =
+            setTimeout(() => {
+
+              saveLog(box);
+
+            }, 1000);
+
+        }
+      );
+
+    });
+
+document
+  .querySelectorAll("#logPage .log-title")
+  .forEach(input => {
+
+    let timer;
+
+    input.addEventListener(
+      "input",
+      () => {
+
+        clearTimeout(timer);
+
+        const box =
+          input.parentElement.querySelector(".phrase-box");
+
+        timer =
+          setTimeout(() => {
+
+            saveLog(box);
+
+          }, 1000);
+
+      }
+    );
+
+    input.addEventListener(
+      "keydown",
+      e => {
+
+        if (e.key === "Enter") {
+
+          e.preventDefault();
+
+          input.parentElement
+            .querySelector(".phrase-box")
+            .focus();
+
+        }
+
+      }
+    );
+
+  });
+
+
+
+}
+
+/* 로그 끝 */
+
 async function savePhrase(box) {
 
   const id = box.dataset.id;
@@ -774,7 +984,41 @@ async function savePhrase(box) {
 
   console.log(text);
 
-}async function copyPhrase(id) {
+}
+
+async function saveLog(box) {
+
+  const id =
+    box.dataset.id;
+
+  const title =
+    document.querySelector(
+      `[data-title-id="${id}"]`
+    ).value;
+
+  const content =
+    box.value;
+
+  await fetch(
+    `${API}/items/${id}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title,
+        content
+      })
+    }
+  );
+
+}
+
+
+
+
+async function copyPhrase(id) {
 
   const box =
     document.querySelector(
@@ -810,7 +1054,11 @@ async function deleteItem(id) {
 
   showToast("Deleted.");
 
-showPage(currentPage);
+  loadMemos();
+  loadLinks();
+  loadPhrases();
+  loadLogs();
+  loadFavorites();
 
 }
 
@@ -855,17 +1103,11 @@ async function searchItems() {
       .trim()
       .toLowerCase();
 
-      favoritePage.style.display =
-  "none";
-
-memoPage.style.display =
-  "none";
-
-linkPage.style.display =
-  "none";
-
-phrasePage.style.display =
-  "none";
+document.getElementById("favoritePage").style.display = "none";
+document.getElementById("memoPage").style.display = "none";
+document.getElementById("linkPage").style.display = "none";
+document.getElementById("phrasePage").style.display = "none";
+document.getElementById("logPage").style.display = "none";
 
 searchPage.style.display =
   "block";
@@ -912,10 +1154,20 @@ if (!keyword) {
       )
     );
 
+    const logs =
+  data.filter(item =>
+    item.type === "log" &&
+    (
+      item.title?.toLowerCase().includes(keyword) ||
+      item.content?.toLowerCase().includes(keyword)
+    )
+  );
+
   renderSearchResults(
     notes,
     links,
-    phrases
+    phrases,
+    logs
   );
 
 }
@@ -924,7 +1176,8 @@ if (!keyword) {
 function renderSearchResults(
   notes,
   links,
-  phrases
+  phrases,
+  logs
 ) {
 
   searchPage.style.display =
@@ -933,9 +1186,10 @@ function renderSearchResults(
   searchResults.innerHTML = "";
 
   if (
-    notes.length === 0 &&
-    links.length === 0 &&
-    phrases.length === 0
+notes.length === 0 &&
+links.length === 0 &&
+phrases.length === 0 &&
+logs.length === 0
   ) {
 
     searchResults.innerHTML =
@@ -1023,6 +1277,35 @@ notes.map(item => `
       </div>`;
   }
 
+if (logs.length) {
+
+  searchResults.innerHTML +=
+    `<div class="search-group">
+      <div class="search-title">
+        ${TYPES.log.icon}
+      </div>
+      ${
+        logs.map(item => `
+<div
+  class="search-item"
+  onclick="goToItem(
+    'log',
+    '${item.id}'
+  )"
+>
+  ${item.title || "(제목 없음)"}
+  <div class="search-sub">
+    ${item.content || ""}
+  </div>
+</div>
+`).join("")
+      }
+    </div>`;
+
+}
+
+
+
 }
 /* 클릭 바로 가기 */
 function goToItem(
@@ -1076,6 +1359,11 @@ document.getElementById(
   "phraseTab"
 ).innerHTML =
   TYPES.phrase.icon;
+
+  document.getElementById(
+  "logTab"
+).innerHTML =
+  TYPES.log.icon;
 
 document.getElementById(
   "fileTab"
