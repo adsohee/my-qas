@@ -565,7 +565,7 @@ resize: none;
 overflow: hidden;
   outline: none;
 
-  padding: 10px 0;
+  padding: 2px 0;
 
   font-size: 12px;
 
@@ -580,7 +580,7 @@ overflow: hidden;
   border-bottom:
     1px solid #f2f2f2;
 
-  padding-bottom: 6px;
+  padding-bottom: 5px;
 
   margin-bottom: 0px;
 
@@ -833,7 +833,7 @@ overflow: hidden;
 
 .log-header .phrase-actions{
   display:flex;
-  align-items:center;
+  align-items:flex-start;
   gap:8px;
   margin:0;
   flex-shrink:0;
