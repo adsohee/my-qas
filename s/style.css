@@ -142,7 +142,7 @@ body::-webkit-scrollbar {
 
   padding: 10px;
   padding-top: 70px;
-  padding-bottom: 5px;
+  padding-bottom: 50px;
 
 }
 
@@ -160,7 +160,7 @@ body::-webkit-scrollbar {
 
   text-align: center;
   width: calc(100% - 1px);
-  padding-bottom: 70px;
+  padding-bottom: 50px;
 }
 
 .main-logo {
