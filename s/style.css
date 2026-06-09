@@ -553,8 +553,7 @@ body::-webkit-scrollbar {
 
 .phrase-box {
 
-  flex: 1;
-  width: auto;
+  width: 100%;
   border: none;
 
   border: none;
@@ -563,7 +562,7 @@ resize: none;
 overflow: hidden;
   outline: none;
 
-  padding: 6px 0;
+  padding: 7px 0;
 
   font-size: 12px;
 
@@ -578,7 +577,7 @@ overflow: hidden;
   border-bottom:
     1px solid #f2f2f2;
 
-  padding-bottom: 9px;
+  padding-bottom: 7px;
 
   margin-bottom: 0px;
 
@@ -820,7 +819,7 @@ overflow: hidden;
 
 .log-header{
   display:flex;
-  align-items:flex-start;
+  align-items:center;
   justify-content:space-between;
   gap:8px;
 }
