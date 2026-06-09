@@ -4,7 +4,7 @@ export async function onRequest(context) {
   // GET /api/items
   if (request.method === "GET") {
     const { results } = await env.DB
-      .prepare("SELECT * FROM items ORDER BY created_at DESC")
+.prepare("SELECT * FROM items ORDER BY sort_order ASC")
       .all();
 
     return Response.json(results);
@@ -13,6 +13,13 @@ export async function onRequest(context) {
   // POST /api/items
   if (request.method === "POST") {
     const body = await request.json();
+
+    const { results } = await env.DB
+  .prepare("SELECT MAX(sort_order) AS maxOrder FROM items")
+  .all();
+
+const nextSortOrder =
+  (results[0]?.maxOrder ?? 0) + 1;
 
     await env.DB.prepare(`
       INSERT INTO items (
@@ -23,9 +30,10 @@ export async function onRequest(context) {
         url,
         favorite,
         created_at,
-        updated_at
+        updated_at,
+        sort_order
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `)
       .bind(
         crypto.randomUUID(),
@@ -35,7 +43,8 @@ export async function onRequest(context) {
         body.url ?? "",
         body.favorite ?? 0,
         new Date().toISOString(),
-        new Date().toISOString()
+        new Date().toISOString(),
+        nextSortOrder
       )
       .run();
 
