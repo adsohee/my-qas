@@ -821,6 +821,23 @@ overflow: hidden;
   font-weight:450;
 }
 
+.log-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+
+.log-header .log-title{
+  flex:1;
+}
+
+.log-header .phrase-actions{
+  margin-top:0;
+  flex-shrink:0;
+}
+
+
 .memo-item,
 .phrase-item {
   cursor: grab;
