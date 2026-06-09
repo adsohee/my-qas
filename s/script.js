@@ -408,7 +408,7 @@ document
       e.preventDefault();
     });
 
-    item.addEventListener("drop", e => {
+item.addEventListener("drop", async e => {
       e.preventDefault();
 
       if (
@@ -419,6 +419,8 @@ document
           draggedMemo,
           item
         );
+
+        await saveOrder("memoList");
       }
     });
 
