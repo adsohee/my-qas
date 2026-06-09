@@ -1175,27 +1175,29 @@ async function saveOrder(containerId) {
        #${containerId} > .phrase-item`
     );
 
+  const orders = [];
+
   let order = 1;
 
-  for (const item of items) {
+  items.forEach(item => {
 
-    await fetch(
-      `${API}/items/${item.dataset.id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
-        body: JSON.stringify({
-          sort_order: order
-        })
-      }
-    );
+    orders.push({
+      id: item.dataset.id,
+      sort_order: order++
+    });
 
-    order++;
+  });
 
-  }
+  await fetch(
+    `${API}/items/reorder`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(orders)
+    }
+  );
 
 }
 
