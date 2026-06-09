@@ -680,18 +680,18 @@ linkList.innerHTML += `
 
   <div class="memo-main">
 
-    <span
-      class="memo-title"
-      onclick="window.open('${item.url}','_blank')"
-    >
-      ${item.title}
-    </span>
+<span
+  class="memo-title"
+  ondblclick="window.open('${item.url}','_blank')"
+>
+  ${item.title}
+</span>
 
     <span class="memo-dot">·</span>
 
 <span
   class="memo-content link-copy"
-  onclick="copyLink('${item.url}')"
+  ondblclick="copyLink('${item.url}')"
 >
   ${item.url}
 </span>
@@ -801,6 +801,8 @@ phraseList.innerHTML += `
 <div
   class="phrase-item"
   id="item-${item.id}"
+  draggable="true"
+  data-id="${item.id}"
 >
 
 <textarea
@@ -867,7 +869,10 @@ box.style.height =
 );
 
   });
-
+enableDragSort(
+  "phraseList",
+  "phrase-item"
+);
 
 }
 
@@ -902,6 +907,8 @@ async function loadLogs() {
 <div
   class="phrase-item"
   id="item-${item.id}"
+  draggable="true"
+  data-id="${item.id}"
 >
 
 <input
@@ -1013,7 +1020,10 @@ document
 
   });
 
-
+enableDragSort(
+  "logList",
+  "phrase-item"
+);
 
 }
 
@@ -1233,6 +1243,7 @@ function enableDragSort(
               containerId
             );
 
+            draggedItem = null;
           }
 
         }
