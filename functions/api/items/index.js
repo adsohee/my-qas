@@ -1,6 +1,5 @@
 export async function onRequest(context) {
   const { request, env } = context;
-  const url = new URL(request.url);
 
   // GET /api/items
   if (request.method === "GET") {
@@ -43,50 +42,7 @@ export async function onRequest(context) {
     return new Response("OK");
   }
 
-  // PATCH /api/items/{id}
-  if (request.method === "PATCH") {
-    const id = url.pathname.split("/").pop();
-    const body = await request.json();
-
-    const fields = [];
-    const values = [];
-
-    for (const [key, value] of Object.entries(body)) {
-      fields.push(`${key} = ?`);
-      values.push(value);
-    }
-
-    fields.push("updated_at = ?");
-    values.push(new Date().toISOString());
-
-    values.push(id);
-
-    await env.DB.prepare(`
-      UPDATE items
-      SET ${fields.join(", ")}
-      WHERE id = ?
-    `)
-      .bind(...values)
-      .run();
-
-    return new Response("OK");
-  }
-
-  // DELETE /api/items/{id}
-  if (request.method === "DELETE") {
-    const id = url.pathname.split("/").pop();
-
-    await env.DB.prepare(`
-      DELETE FROM items
-      WHERE id = ?
-    `)
-      .bind(id)
-      .run();
-
-    return new Response("OK");
-  }
-
   return new Response("Method Not Allowed", {
-    status: 405
+    status: 405,
   });
 }
