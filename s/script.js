@@ -1165,6 +1165,37 @@ async function deleteItem(id) {
 
 }
 
+async function saveOrder(containerId) {
+
+  const items =
+    document.querySelectorAll(
+      `#${containerId} > .memo-item,
+       #${containerId} > .phrase-item`
+    );
+
+  let order = 1;
+
+  for (const item of items) {
+
+    await fetch(
+      `${API}/items/${item.dataset.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+        body: JSON.stringify({
+          sort_order: order
+        })
+      }
+    );
+
+    order++;
+
+  }
+
+}
 
 function showToast(text) {
 
