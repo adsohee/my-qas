@@ -12,15 +12,17 @@ export async function onRequest(context) {
 
   // POST /api/items
   if (request.method === "POST") {
+    
     const body = await request.json();
 
-    const { results } = await env.DB
-  .prepare("SELECT MAX(sort_order) AS maxOrder FROM items")
-  .all();
+await env.DB
+  .prepare(`
+    UPDATE items
+    SET sort_order = sort_order + 1
+  `)
+  .run();
 
-const nextSortOrder =
-  (results[0]?.maxOrder ?? 0) + 1;
-
+const nextSortOrder = 1;
     await env.DB.prepare(`
       INSERT INTO items (
         id,
