@@ -656,11 +656,12 @@ async function addLink() {
 
   });
 
-  linkTitleInput.value = "";
-  linkUrlInput.value = "";
+linkTitleInput.value = "";
+linkUrlInput.value = "";
 
-  loadLinks();
+await refreshItems();
 
+loadLinks();
 }
 
 async function loadLinks() {
@@ -768,7 +769,9 @@ async function addPhrase() {
 
   });
 
-  loadPhrases();
+await refreshItems();
+
+loadPhrases();
 
 }
 
@@ -791,8 +794,10 @@ async function addLog() {
 
   });
 
-  loadLogs();
+await refreshItems();
 
+loadLogs();
+  
 }
 
 async function loadPhrases() {
@@ -1167,13 +1172,15 @@ async function deleteItem(id) {
     }
   );
 
-  showToast("Deleted.");
+showToast("Deleted.");
 
-  loadMemos();
-  loadLinks();
-  loadPhrases();
-  loadLogs();
-  loadFavorites();
+await refreshItems();
+
+loadMemos();
+loadLinks();
+loadPhrases();
+loadLogs();
+loadFavorites();
 
 }
 
