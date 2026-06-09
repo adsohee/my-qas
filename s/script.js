@@ -1236,51 +1236,18 @@ function enableDragSort(
         () => {
 
           draggedItem = item;
-          item.classList.add("dragging");
 
         }
       );
 
       item.addEventListener(
-  "dragend",
-  () => {
+        "dragover",
+        e => {
 
-    item.classList.remove("dragging");
+          e.preventDefault();
 
-    document
-      .querySelectorAll(".drag-over")
-      .forEach(el =>
-        el.classList.remove("drag-over")
+        }
       );
-
-    draggedItem = null;
-
-  }
-);
-
-item.addEventListener(
-  "dragover",
-  e => {
-
-    e.preventDefault();
-
-    if (
-      draggedItem &&
-      draggedItem !== item
-    ) {
-
-      document
-        .querySelectorAll(".drag-over")
-        .forEach(el =>
-          el.classList.remove("drag-over")
-        );
-
-      item.classList.add("drag-over");
-
-    }
-
-  }
-);
 
       item.addEventListener(
         "drop",
@@ -1292,7 +1259,7 @@ item.addEventListener(
             draggedItem &&
             draggedItem !== item
           ) {
-item.classList.remove("drag-over");
+
             item.parentNode.insertBefore(
               draggedItem,
               item
@@ -1302,8 +1269,7 @@ item.classList.remove("drag-over");
               containerId
             );
 
-            draggedItem.classList.remove("dragging");
-draggedItem = null;
+            draggedItem = null;
           }
 
         }
