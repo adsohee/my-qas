@@ -834,8 +834,6 @@ phraseList.innerHTML += `
 
 <div class="log-header">
 
-  <div></div>
-
   <div class="phrase-actions">
 
     <button
@@ -851,6 +849,10 @@ phraseList.innerHTML += `
     >
       ${COPY_ICON}
     </button>
+
+  </div>
+
+</div>
 
   </div>
 
