@@ -243,6 +243,7 @@ const searchResults =
     "searchResults"
   );
 
+let draggedMemo = null;
 
 
 async function addMemo() {
@@ -309,6 +310,8 @@ memoList.innerHTML += `
 <div
   class="memo-item"
   id="item-${item.id}"
+  draggable="true"
+  data-id="${item.id}"
 >
 
   <div class="memo-main">
@@ -393,7 +396,35 @@ document
 
   });
 
+document
+  .querySelectorAll("#memoList .memo-item")
+  .forEach(item => {
 
+    item.addEventListener("dragstart", () => {
+      draggedMemo = item;
+    });
+
+    item.addEventListener("dragover", e => {
+      e.preventDefault();
+    });
+
+    item.addEventListener("drop", e => {
+      e.preventDefault();
+
+      if (
+        draggedMemo &&
+        draggedMemo !== item
+      ) {
+        item.parentNode.insertBefore(
+          draggedMemo,
+          item
+        );
+      }
+    });
+
+  });
+
+  
 }
 
 memoInput.addEventListener("keydown", (e) => {
