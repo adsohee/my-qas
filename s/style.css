@@ -377,7 +377,7 @@ body::-webkit-scrollbar {
   border: none;
 
   border-bottom:
-    1px solid #808080;
+    1px solid #f2f2f2;
 
   padding: 8px 4px;
 
@@ -429,7 +429,7 @@ body::-webkit-scrollbar {
     1px solid #f2f2f2;
 
   padding:
-    10px 0 8px;
+    8px 0;
 
   text-align: left;
 
@@ -578,11 +578,11 @@ overflow: hidden;
 .phrase-item {
 
   border-bottom:
-    1px solid #e5e5e5;
+    1px solid #f2f2f2;
 
-  padding-bottom: 8px;
+  padding-bottom: 6px;
 
-  margin-bottom: 8px;
+  margin-bottom: 0px;
 
 }
 
@@ -594,7 +594,7 @@ overflow: hidden;
 
   gap: 10px;
 
-  margin-top: 1px;
+  margin-top: 0;
 
 }
 
@@ -774,7 +774,7 @@ overflow: hidden;
 
 .search-item {
 
-  border-bottom:1px solid #f3f3f3;
+  border-bottom:1px solid #f2f2f2;
 
   padding:8px 0;
 
