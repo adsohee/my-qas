@@ -249,6 +249,7 @@ const searchResults =
 
 let draggedItem = null;
 let allItems = [];
+let keywords = [];
 
 const deleteConfirmMap = {};
 
@@ -1406,7 +1407,7 @@ searchInput.addEventListener(
 
 async function searchItems() {
 
-const keywords =
+keywords =
   searchInput.value
     .trim()
     .toLowerCase()
@@ -1493,6 +1494,30 @@ match(item.content)
 
 }
 
+function highlight(text) {
+
+  let result = text || "";
+
+  keywords.forEach(word => {
+
+    const escaped =
+      word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+    result = result.replace(
+      new RegExp(escaped, "gi"),
+      match =>
+        `<span class="search-highlight">${match}</span>`
+    );
+
+  });
+
+  return result;
+
+}
+
+
+
+
 /* 결과 렌더 함수 추가 */
 function renderSearchResults(
   notes,
@@ -1539,9 +1564,9 @@ notes.map(item => `
   >
 
             
-              ${item.title}
+              ${highlight(item.title)}
               <div class="search-sub">
-                ${item.content}
+            ${highlight(item.content)}
               </div>
             </div>
           `).join("")
@@ -1567,7 +1592,7 @@ notes.map(item => `
 >
               ${item.title}
               <div class="search-sub">
-                ${item.url}
+                ${highlight(item.url)}
               </div>
             </div>
           `).join("")
