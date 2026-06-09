@@ -1149,10 +1149,10 @@ async function saveLog(box) {
 
 async function copyPhrase(id) {
 
-  const box =
-    document.querySelector(
-      `[data-id="${id}"]`
-    );
+const box =
+  document.querySelector(
+    `.phrase-box[data-id="${id}"]`
+  );
 
   await navigator.clipboard.writeText(
     box.value
