@@ -1220,7 +1220,7 @@ document.getElementById("logPage").style.display = "none";
 searchPage.style.display =
   "block";
 
-if (!keyword) {
+if (keywords.length === 0) {
 
   searchPage.style.display =
     "none";
@@ -1491,3 +1491,31 @@ document
   .forEach(textarea =>
     textarea.setAttribute("spellcheck", "false")
   );
+
+  /* 검색 슬러시 단축키 */
+document.addEventListener(
+  "keydown",
+  e => {
+
+    const tag =
+      document.activeElement.tagName;
+
+    if (
+      tag === "INPUT" ||
+      tag === "TEXTAREA"
+    ) {
+      return;
+    }
+
+    if (e.key === "/") {
+
+      e.preventDefault();
+
+      searchInput.focus();
+
+      searchInput.select();
+
+    }
+
+  }
+);
