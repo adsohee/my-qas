@@ -819,6 +819,25 @@ overflow: hidden;
   font-family:Pretendard,sans-serif;
 
   font-weight:450;
+.memo-item,
+.phrase-item {
+  cursor: grab;
+  transition:
+    opacity .15s ease,
+    transform .15s ease,
+    box-shadow .15s ease;
+}
 
+.memo-item.dragging,
+.phrase-item.dragging {
+  opacity: 0.5;
+  transform: scale(0.98);
+  cursor: grabbing;
+}
+
+.memo-item.drag-over,
+.phrase-item.drag-over {
+  box-shadow: inset 0 3px 0 #4f8cff;
+}
 }
 
