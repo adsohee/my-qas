@@ -342,4 +342,4 @@ function enableDragSort(){
 }
 
 loadLinks();
-linkTitleInput.focus();
+searchInput.focus();
