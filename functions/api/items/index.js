@@ -31,11 +31,12 @@ const nextSortOrder = 1;
         content,
         url,
         favorite,
-        created_at,
-        updated_at,
-        sort_order
+category,
+created_at,
+updated_at,
+sort_order
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `)
       .bind(
         crypto.randomUUID(),
@@ -43,8 +44,9 @@ const nextSortOrder = 1;
         body.title ?? "",
         body.content ?? "",
         body.url ?? "",
-        body.favorite ?? 0,
-        new Date().toISOString(),
+body.favorite ?? 0,
+body.category ?? "default",
+new Date().toISOString(),
         new Date().toISOString(),
         nextSortOrder
       )
