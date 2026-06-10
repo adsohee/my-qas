@@ -474,7 +474,7 @@ loadFavorites();
 
 }
 
-let currentPage = "favorite";
+let currentPage = "memo";
 
 function showPage(page) {
 
@@ -585,7 +585,7 @@ if (page === "log") {
 }
 
 
-showPage("favorite");
+showPage("memo");
 loadFavorites();
 
 
@@ -1021,8 +1021,10 @@ document
 
         clearTimeout(timer);
 
-        const box =
-          input.parentElement.querySelector(".phrase-box");
+const box =
+  document.querySelector(
+    `.phrase-box[data-id="${input.dataset.titleId}"]`
+  );
 
         timer =
           setTimeout(() => {
@@ -1042,9 +1044,9 @@ document
 
           e.preventDefault();
 
-          input.parentElement
-            .querySelector(".phrase-box")
-            .focus();
+document.querySelector(
+  `.phrase-box[data-id="${input.dataset.titleId}"]`
+).focus();
 
         }
 
