@@ -426,6 +426,23 @@ body::-webkit-scrollbar{
 
 }
 
+.link-title-input{
+
+  border:none;
+
+  outline:none;
+
+  background:transparent;
+
+  font:inherit;
+
+  color:inherit;
+
+  padding:0;
+
+  width:170px;
+
+}
 
 /* 즐겨찾기 버튼 숨김 */
 
