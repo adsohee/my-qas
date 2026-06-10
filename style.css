@@ -229,6 +229,12 @@ body {
 
 .meeting-links {
   margin-top: 8px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 13px;
 }
 
 .meeting-links a {
@@ -249,7 +255,7 @@ body {
 }
 
 .logout-link {
-  color: #c85a5a;
+  color: #c85a5a; !important;
   margin-top: 13px;
 }
 
