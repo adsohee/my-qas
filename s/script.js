@@ -1454,23 +1454,21 @@ if (keywords.length === 0) {
 
 const data = allItems;
 
-  const notes =
-    data.filter(item =>
-      item.type === "note" &&
-      (
-match(item.title) ||
-match(item.content)
-      )
-    );
+const notes =
+  data.filter(item =>
+    item.type === "note" &&
+    match(
+      `${item.title || ""} ${item.content || ""}`
+    )
+  );
 
-  const links =
-    data.filter(item =>
-      item.type === "link" &&
-      (
-match(item.title) ||
-match(item.url)
-      )
-    );
+const links =
+  data.filter(item =>
+    item.type === "link" &&
+    match(
+      `${item.title || ""} ${item.url || ""}`
+    )
+  );
 
   const phrases =
     data.filter(item =>
@@ -1480,12 +1478,11 @@ match(item.content)
       )
     );
 
-    const logs =
+const logs =
   data.filter(item =>
     item.type === "log" &&
-    (
-match(item.title) ||
-match(item.content)
+    match(
+      `${item.title || ""} ${item.content || ""}`
     )
   );
 
@@ -1686,7 +1683,15 @@ function goToItem(
       block: "center"
     });
 
+    target.classList.add("search-target");
+
+setTimeout(() => {
+  target.classList.remove("search-target");
+}, 1500);
+
   }, 200);
+
+  
 
 }
 
