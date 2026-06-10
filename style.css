@@ -183,3 +183,46 @@ body {
     transform: translateY(0);
   }
 }
+.top-bar {
+
+  position: fixed;
+
+  top: 0;
+  right: 0;
+
+  padding: 15px;
+
+  z-index: 9999;
+
+}
+
+.install-button {
+
+  width: 30px;
+  height: 30px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: rgba(255,255,255,0.55);
+
+  color: #777777;
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  transition: 0.2s;
+
+}
+
+.install-button:active {
+
+  transform: scale(0.96);
+
+}
