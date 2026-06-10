@@ -59,7 +59,5 @@ const logoutLink = document.getElementById("logoutLink");
 
 logoutLink?.addEventListener("click", (e) => {
   e.preventDefault();
-
-  window.location.href =
-    "/cdn-cgi/access/logout?returnTo=https%3A%2F%2Fgoogle.com";
+  window.location.href = "/cdn-cgi/access/logout";
 });
