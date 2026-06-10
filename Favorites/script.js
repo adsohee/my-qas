@@ -92,7 +92,7 @@ body: JSON.stringify({
   type: "link",
   title,
   url,
-  category: CATEGORY
+  category: "favorites"
 })
   });
 
