@@ -261,3 +261,19 @@ body {
 .logout-link:hover {
   opacity: 0.7;
 }
+
+.search-target {
+  animation: searchFlash 1.5s ease;
+}
+
+@keyframes searchFlash {
+  0% {
+    background: #fff3a0;
+  }
+  50% {
+    background: #ffe066;
+  }
+  100% {
+    background: transparent;
+  }
+}
