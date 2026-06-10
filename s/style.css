@@ -795,7 +795,9 @@ overflow: hidden;
 
 }
 
-.search-item:hover {
+.search-item:hover,
+.memo-item:hover,
+.phrase-item:hover {
 
   background: #f5f5f5;
 
