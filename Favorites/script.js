@@ -1,6 +1,3 @@
-`script.js`
-
-```javascript
 const API = "/api";
 
 const apiFetch = (url, options = {}) =>
@@ -49,11 +46,30 @@ const deleteConfirmMap = {};
 
 addLinkBtn.addEventListener("click", addLink);
 
-linkUrlInput.addEventListener("keydown", e => {
+linkTitleInput.addEventListener("keydown", e => {
+
   if (e.key === "Enter") {
+
     e.preventDefault();
-    addLink();
+
+    linkUrlInput.focus();
+
   }
+
+});
+
+linkUrlInput.addEventListener("keydown", async e => {
+
+  if (e.key === "Enter") {
+
+    e.preventDefault();
+
+    await addLink();
+
+    linkTitleInput.focus();
+
+  }
+
 });
 
 searchInput.addEventListener("input", loadLinks);
@@ -89,8 +105,11 @@ async function loadLinks() {
   const res = await apiFetch(`${API}/items`);
   const data = await res.json();
 
-  const keyword =
-    searchInput.value.trim().toLowerCase();
+const keyword =
+  searchInput.value
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "");
 
   const links = data
     .filter(item => item.type === "link")
@@ -98,10 +117,21 @@ async function loadLinks() {
 
       if (!keyword) return true;
 
-      return (
-        item.title.toLowerCase().includes(keyword) ||
-        item.url.toLowerCase().includes(keyword)
-      );
+return (
+
+  item.title
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .includes(keyword)
+
+  ||
+
+  item.url
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .includes(keyword)
+
+);
 
     });
 
@@ -312,4 +342,4 @@ function enableDragSort(){
 }
 
 loadLinks();
-```
+linkTitleInput.focus();
