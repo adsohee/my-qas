@@ -983,9 +983,12 @@ async function loadLogs() {
     .querySelectorAll("#logPage .phrase-box")
     .forEach(box => {
 
-      box.style.height = "auto";
-      box.style.height =
-        box.scrollHeight + "px";
+box.style.height = "20px";
+
+if (box.value.trim()) {
+  box.style.height = "auto";
+  box.style.height = box.scrollHeight + "px";
+}
 
       let timer;
 
@@ -995,9 +998,12 @@ async function loadLogs() {
 
           clearTimeout(timer);
 
-          box.style.height = "auto";
-          box.style.height =
-            box.scrollHeight + "px";
+box.style.height = "20px";
+
+if (box.value.trim()) {
+  box.style.height = "auto";
+  box.style.height = box.scrollHeight + "px";
+}
 
           timer =
             setTimeout(() => {
