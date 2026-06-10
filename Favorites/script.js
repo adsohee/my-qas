@@ -1,5 +1,7 @@
 const API = "/api";
 
+const CATEGORY = "favorites";
+
 const apiFetch = (url, options = {}) =>
   fetch(url, {
     credentials: "include",
@@ -86,11 +88,12 @@ async function addLink() {
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({
-      type: "link",
-      title,
-      url
-    })
+body: JSON.stringify({
+  type: "link",
+  title,
+  url,
+  category: CATEGORY
+})
   });
 
   linkTitleInput.value = "";
@@ -111,8 +114,11 @@ const keyword =
     .toLowerCase()
     .replace(/\s+/g, "");
 
-  const links = data
-    .filter(item => item.type === "link")
+const links = data
+  .filter(item =>
+    item.type === "link" &&
+    item.category === CATEGORY
+  )
     .filter(item => {
 
       if (!keyword) return true;
