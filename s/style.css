@@ -876,3 +876,13 @@ overflow: hidden;
   color:#2563eb;
   font-weight:600;
 }
+
+.search-target {
+  animation: searchFlash 1.5s ease;
+}
+
+@keyframes searchFlash {
+  0%   { background: #fff3a0; }
+  50%  { background: #ffe066; }
+  100% { background: transparent; }
+}
