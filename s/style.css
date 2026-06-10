@@ -818,6 +818,7 @@ overflow: hidden;
   font-family:Pretendard,sans-serif;
 
   font-weight:450;
+    background: transparent; /* 이 줄 추가 */
 
 }
 
