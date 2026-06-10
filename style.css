@@ -247,3 +247,12 @@ body {
 .meeting-links a:hover {
   opacity: 0.7;
 }
+
+.logout-link {
+  color: #c85a5a;
+  margin-top: 13px;
+}
+
+.logout-link:hover {
+  opacity: 0.7;
+}
