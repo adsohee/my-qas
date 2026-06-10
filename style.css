@@ -224,6 +224,9 @@ body {
 
 .install-button:active {
 
+  transform: scale(0.96);
+}
+
 .meeting-links {
   margin-top: 8px;
 }
