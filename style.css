@@ -224,6 +224,23 @@ body {
 
 .install-button:active {
 
-  transform: scale(0.96);
+.meeting-links {
+  margin-top: 8px;
+}
 
+.meeting-links a {
+  font-size: 12px;
+
+  letter-spacing: 1px;
+
+  color: #393939;
+
+  padding: 0 20px;
+
+  text-decoration: underline;
+  text-underline-offset: 1.5px;
+}
+
+.meeting-links a:hover {
+  opacity: 0.7;
 }
