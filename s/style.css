@@ -570,6 +570,8 @@ overflow: hidden;
     Pretendard,
     sans-serif;
 
+  background: transparent;
+
 }
 
 .phrase-item {
@@ -824,6 +826,8 @@ overflow: hidden;
   align-items:center;
   justify-content:space-between;
   gap:8px;
+
+  
 }
 
 .log-header .log-title{
