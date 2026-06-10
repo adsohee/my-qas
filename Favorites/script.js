@@ -156,12 +156,11 @@ return (
 
     <div class="memo-main">
 
-      <span
-        class="memo-title"
-        ondblclick="window.open('${item.url}','_blank')"
-      >
-        ${item.title}
-      </span>
+<input
+  class="link-title-input"
+  data-id="${item.id}"
+  value="${item.title}"
+>
 
       <span class="memo-dot">·</span>
 
@@ -196,6 +195,37 @@ return (
 
 </div>
 `;
+
+  });
+
+  document
+  .querySelectorAll(".link-title-input")
+  .forEach(input => {
+
+    let timer;
+
+    input.addEventListener("input", () => {
+
+      clearTimeout(timer);
+
+      timer = setTimeout(async () => {
+
+        await apiFetch(
+          `${API}/items/${input.dataset.id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              title: input.value
+            })
+          }
+        );
+
+      }, 1000);
+
+    });
 
   });
 
