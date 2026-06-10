@@ -336,39 +336,41 @@ memoList.innerHTML += `
   data-id="${item.id}"
 >
 
-  <div class="memo-main">
+  <div class="link-line">
 
-<input
-  class="memo-title-input"
-  data-id="${item.id}"
-  value="${item.title}"
->
+    <div class="memo-main">
 
-  </div>
+      <input
+        class="memo-title-input"
+        data-id="${item.id}"
+        value="${item.title}"
+      >
 
-  <div class="memo-meta">
+    </div>
 
+    <div class="memo-meta">
 
-    <button
-      class="memo-favorite ${
-        item.favorite ? "active" : ""
-      }"
-      onclick="toggleFavorite(this, '${item.id}')"
-    >
-      ${FAVORITE_ICON}
-    </button>
+      <button
+        class="memo-favorite ${
+          item.favorite ? "active" : ""
+        }"
+        onclick="toggleFavorite(this, '${item.id}')"
+      >
+        ${FAVORITE_ICON}
+      </button>
 
-        <button
-      class="icon-btn"
-      onclick="deleteItem(event, '${item.id}')"
-    >
-      ${DELETE_ICON}
-    </button>
+      <button
+        class="icon-btn"
+        onclick="deleteItem(event, '${item.id}')"
+      >
+        ${DELETE_ICON}
+      </button>
 
-    <span class="memo-date">
-      ${formattedDate}
-    </span>
+      <span class="memo-date">
+        ${formattedDate}
+      </span>
 
+    </div>
 
   </div>
 
