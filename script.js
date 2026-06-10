@@ -54,3 +54,12 @@ installButton?.addEventListener(
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("/service-worker.js");
 }
+
+const logoutLink = document.getElementById("logoutLink");
+
+logoutLink?.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  window.location.href =
+    "/cdn-cgi/access/logout?returnTo=https://my.qas.kr/";
+});
