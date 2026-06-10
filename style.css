@@ -254,9 +254,8 @@ body {
   opacity: 0.7;
 }
 
-.logout-link {
-  color: #c85a5a; !important;
-  margin-top: 13px;
+.meeting-links a.logout-link {
+  color: #c85a5a;
 }
 
 .logout-link:hover {
