@@ -61,5 +61,5 @@ logoutLink?.addEventListener("click", (e) => {
   e.preventDefault();
 
   window.location.href =
-    "/cdn-cgi/access/logout?returnTo=https://my.qas.kr/";
+    "/cdn-cgi/access/logout?returnTo=https://accounts.google.com/logout";
 });
